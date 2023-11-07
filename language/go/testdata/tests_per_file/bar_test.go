@@ -2,4 +2,6 @@ package tests_per_file
 
 import "testing"
 
-func TestStuff(t *testing.T) {}
+func TestStuff(t *testing.T) {
+	helperMethod()
+}

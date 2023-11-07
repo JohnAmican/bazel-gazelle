@@ -9,3 +9,5 @@ import (
 type fileSpec testtools.FileSpec
 
 func TestStuff(t *testing.T) {}
+
+func helperMethod() {}
