@@ -16,7 +16,7 @@ limitations under the License.
 package proto
 
 const (
-	// PackageInfoKey is the name of a private attribute set on generated
+	// PackageKey is the name of a private attribute set on generated
 	// proto_library rules. This attribute contains a Package record which
 	// describes the library and its sources.
 	PackageKey = "_package"

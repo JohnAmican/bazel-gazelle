@@ -35,6 +35,7 @@ type goPackage struct {
 	name, dir, rel        string
 	library, binary, test goTarget
 	tests                 []goTarget
+	testHelpers           []goTarget
 	proto                 protoTarget
 	hasTestdata           bool
 	hasMainFunction       bool
@@ -112,7 +113,7 @@ func (pkg *goPackage) addFile(c *config.Config, er *embedResolver, info fileInfo
 		if getGoConfig(c).testMode == fileTestMode || len(pkg.tests) == 0 {
 			pkg.tests = append(pkg.tests, goTarget{})
 		}
-		// Add the the file to the most recently added test target (in fileTestMode)
+		// Add the file to the most recently added test target (in fileTestMode)
 		// or the only test target (in defaultMode).
 		// In both cases, this will be the last element in the slice.
 		test := &pkg.tests[len(pkg.tests)-1]
