@@ -57,6 +57,10 @@ type fileInfo struct {
 	// ends with "_test.go". This is never true for non-Go files.
 	isTest bool
 
+	// isTestHelper is true if the file stem (the part before the extension)
+	// ends with "_test_helper.go". This is never true for non-Go files.
+	isTestHelper bool
+
 	// isExternalTest is true when the file isTest and the original package
 	// name ends with "_test"
 	isExternalTest bool
@@ -160,10 +164,13 @@ func fileNameInfo(path_ string) fileInfo {
 
 	// Determine test, goos, and goarch. This is intended to match the logic
 	// in goodOSArchFile in go/build.
-	var isTest bool
+	var isTest, isTestHelper bool
 	var goos, goarch string
 	l := strings.Split(name[:len(name)-len(path.Ext(name))], "_")
-	if len(l) >= 2 && l[len(l)-1] == "test" {
+	if len(l) >= 3 && l[len(l)-2] == "test" && l[len(l)-1] == "helper" {
+		isTestHelper = ext == goExt
+		l = l[:len(l)-2]
+	} else if len(l) >= 2 && l[len(l)-1] == "test" {
 		isTest = ext == goExt
 		l = l[:len(l)-1]
 	}
@@ -178,12 +185,13 @@ func fileNameInfo(path_ string) fileInfo {
 	}
 
 	return fileInfo{
-		path:   path_,
-		name:   name,
-		ext:    ext,
-		isTest: isTest,
-		goos:   goos,
-		goarch: goarch,
+		path:         path_,
+		name:         name,
+		ext:          ext,
+		isTest:       isTest,
+		isTestHelper: isTestHelper,
+		goos:         goos,
+		goarch:       goarch,
 	}
 }
 

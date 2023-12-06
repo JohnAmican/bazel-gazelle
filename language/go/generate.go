@@ -33,6 +33,7 @@ import (
 )
 
 func (gl *goLang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
+	println("wow look at me")
 	// Extract information about proto files. We need this to exclude .pb.go
 	// files and generate go_proto_library rules.
 	c := args.Config
